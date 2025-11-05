@@ -1,13 +1,19 @@
 import { useState } from "react";
+import DeadlineBlock from "./DeadlineBlock";
+import PlusIcon from "./PlusIcon";
 
 export function AddTodo({ onAdd }) {
-  const [text, setText] = useState(" ");
+  const [text, setText] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [showDeadlineInput, setShowDeadlineInput] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
-      onAdd(text);
-      setText(" ");
+      onAdd(text, deadline);
+      setText("");
+      setDeadline("");
+      setShowDeadlineInput("");
     }
   };
 
@@ -25,22 +31,15 @@ export function AddTodo({ onAdd }) {
           type="submit"
           className="p-3 bg-btn-light hover:bg-btn-light-hv text-white dark:bg-btn-dark hover:dark:bg-btn-dark-hv transition-colors duration-300 cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+          <PlusIcon />
         </button>
       </div>
+      <DeadlineBlock
+        showDeadlineInput={showDeadlineInput}
+        deadline={deadline}
+        setDeadline={setDeadline}
+        setShowDeadlineInput={setShowDeadlineInput}
+      />
     </form>
   );
 }
